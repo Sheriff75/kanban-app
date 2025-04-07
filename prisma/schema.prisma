@@ -1,0 +1,16 @@
+datasource db {
+  provider = "sqlite" // Or "postgresql", "mysql", etc.
+  url      = "file:./dev.db" // Update this for your database
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  taskName    String
+  projectName String
+  priority    Int
+  status      String   
+}
