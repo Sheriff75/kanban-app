@@ -1,4 +1,16 @@
 "use client";
+
+type Task = {
+  id: string;
+  taskName: string;
+  projectName: string;
+  priority: number;
+  status: "toDo" | "inProgress" | "done";
+};
+
+
+
+
 import React, { createContext, useState, useEffect } from "react";
 
 export const KanbanContext = createContext<{
@@ -41,11 +53,11 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const fetchTasks = async () => {
     try {
       const response = await fetch("/api/tasks");
-      const tasks = await response.json();
+      const tasks: Task[]  = await response.json();
       console.log("Fetched tasks:", tasks); // Debugging log
-      setToDo(tasks.filter((task: any) => task.status === "toDo"));
-      setInProgress(tasks.filter((task: any) => task.status === "inProgress"));
-      setDone(tasks.filter((task: any) => task.status === "done"));
+      setToDo(tasks.filter((task) => task.status === "toDo"));
+      setInProgress(tasks.filter((task) => task.status === "inProgress"));
+      setDone(tasks.filter((task) => task.status === "done"));
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
