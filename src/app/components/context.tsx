@@ -35,7 +35,17 @@ export const KanbanContext = createContext<{
     >
   >;
   id: string;
-}>(null as any);
+}>({
+  addTask: false,
+  setAddTask: () => {},
+  toDo: [],
+  setToDo: () => {},
+  inProgress: [],
+  setInProgress: () => {},
+  done: [],
+  setDone: () => {},
+  id: "",
+});
 
 const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [addTask, setAddTask] = useState<boolean>(false);
@@ -64,7 +74,7 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   // Update tasks via the API
-  const updateTasks = async () => {
+  const updateTasks = React.useCallback(async () => {
     await fetch("/api/tasks", {
       method: "POST",
       headers: {
@@ -72,7 +82,7 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       },
       body: JSON.stringify({ toDo, inProgress, done }),
     });
-  };
+  }, [toDo, inProgress, done]);
 
   // Fetch tasks on component mount
   useEffect(() => {
@@ -84,7 +94,7 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     if (toDo.length || inProgress.length || done.length) {
       updateTasks();
     }
-  }, [toDo, inProgress, done]);
+  }, [toDo, inProgress, done, updateTasks]);
 
   const contextValues = {
     addTask,
