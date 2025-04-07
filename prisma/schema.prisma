@@ -15,10 +15,3 @@ model Task {
   status      String   
 }
 
-type Task = {
-  id: string;
-  taskName: string;
-  projectName: string;
-  priority: number;
-  status: "toDo" | "inProgress" | "done";
-};
