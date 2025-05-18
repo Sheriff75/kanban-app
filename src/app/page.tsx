@@ -4,21 +4,45 @@ import Context from "./components/context";
 import Main from "./components/main";
 import { useContext } from "react";
 import { KanbanContext } from "./components/context";
+import { Box, Stack, Button} from "@mui/material";
 export default function Home() {
 
   const { addTask, setAddTask,  } = useContext(KanbanContext)
   return (
-    <div className="bg-[#2c43DD] min-h-screen p-10">
+    <Box
+    sx = {{
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: '#2c43DD',
+      minHeight: '100vh',
+      minWidth: { md: '100vw'},
+      padding: '20px',
+    }}
+    >
+    <Box sx = {{
+      width: '100%'
+    }}>
     <Context>
-      <div className="flex gap-10 mb-10">
+      <Stack
+      sx ={{
+        display: 'flex',
+        gap: '10px',
+        marginBottom: '10px'  
+      }}>
       {addTask && <TaskInput />}
-      <button className="p-2 border border-black rounded-lg w-full bg-lemon-400" onClick={() => setAddTask(!addTask)}>
+      <Button
+      sx={{
+        color: 'white',
+        textTransform: 'initial',
+        border: '1px solid white'
+      }}
+       onClick={() => setAddTask(!addTask)}>
         {addTask ? 'Close' : 'Add Task'}
-      </button>
-      </div>
-      
+      </Button>
+      </Stack> 
       <Main />
     </Context>
-    </div>
+    </Box>
+    </Box>
   );
 }

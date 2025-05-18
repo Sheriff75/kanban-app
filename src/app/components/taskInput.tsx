@@ -17,7 +17,7 @@ const TaskInput = () => {
 
     const priorityColor = priority === 1 ? 'bg-blue-500' : priority === 2 ? 'bg-yellow-500' : 'bg-red-500'
   return (
-    <div className='bg-white flex rounded-lg gap-2 p-4 py-2 flex-col justify-between  w-[500px]'>
+    <div className='bg-white flex rounded-lg gap-2 p-4 py-2 flex-col justify-between  max-w-[500px]'>
         <span>
             <input required value={taskName} onInput={(e) => { setTaskName((e.target as HTMLInputElement).value)}} type='text' placeholder='Enter a task' className='border-2 border-gray-300 rounded-lg p-2' />
             <input required value={projectName} onInput={(e) => { setProjectName((e.target as HTMLInputElement).value)}} type='text' placeholder='Enter a task' className='border-2 border-gray-300 rounded-lg p-2' />

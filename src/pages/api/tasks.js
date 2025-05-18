@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  console.log("API /tasks route hit");
   if (req.method === "GET") {
     try {
       const tasks = await prisma.task.findMany();
@@ -14,7 +13,6 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "POST") {
     try {
-      console.log("Updating tasks:", req.body);
       const { toDo, inProgress, done } = req.body;
 
       await prisma.task.deleteMany();

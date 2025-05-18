@@ -1,6 +1,7 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
 import { KanbanContext } from "./context";
+import { Box, Typography } from "@mui/material";
 
 
 const Main = () => {
@@ -8,13 +9,7 @@ const Main = () => {
   const [draggedTask, setDraggedTask ] = useState<{taskName: string, projectName: string, priority: number, id: string}>({taskName: '', projectName: '', priority: 0, id: ''})
   const [draggedTarget, setDraggedTarget] = useState('')
   const [draggedFrom, setDraggedFrom] = useState('')
-  
 
-  // useEffect( ()=>{
-  //   if(draggedTarget === 'inProgres') {
-  //     setInProgress([...inProgress, ...draggedTask])
-  //   }
-  // }, [draggedTarget, draggedFrom, draggedTask])
 
   const handleFrom = () => {
     if (draggedFrom === 'toDo') {
@@ -41,56 +36,81 @@ const Main = () => {
       }, [inProgress])
 
   return (
-    <div className="flex justify-between w-full p-10 bg-sky-500">
-      <div className=" p-4 flex justify-between  gap-2 flex-col bg-sky-100 p-7  min-w-60"
+    <Box 
+    sx = {{
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+      padding: '20px',
+      backgroundColor: 'purple'
+    }}>
+      <Box 
+      sx = {{
+        padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '5px', minWidth: {xs: '80px', md: '200px'}, backgroundColor: 'rgb(45, 129, 177)', borderRadius: '10px',
+      }}
        onDragOver={(e) => {e.preventDefault();setDraggedTarget('toDo')}}
        onDrop = {() => { setDraggedTarget('toDo'); handleFrom(); handleDrop()}}
        onDragExit={() => {setDraggedTarget('')}}
       >
-        <h1 className="flex justify-center text-3xl font-bold  text-center">To Do</h1>
+        <Typography 
+      sx = {{ textAlign: 'center', fontSize: { xs: '14px', md: '25px'}, color: 'white'}}>To Do</Typography>
         {toDo.map((task, index) => (
-          <div key={index} className="rounded-lg border bg-white text-black p-5" 
+          <Box  
+        sx = {{padding: '15px', borderRadius: '10px', backgroundColor: 'white', }} key={index}
           onDragStart={() => { setDraggedTask(task); setDraggedFrom('toDo'); }} draggable >
-            <h1>
+            <Typography sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>
               {task.taskName} - {task.projectName}
-            </h1>
-            <p>Priority: {task.priority}</p>
-          </div>
+            </Typography>
+            <Typography sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>Priority: {task.priority}</Typography>
+          </Box>  
         ))}
-      </div>
-      <div className=" p-4 flex justify-between  gap-2 flex-col bg-sky-100 p-7 min-w-60" 
+      </Box>
+      <Box 
+      sx = {{
+        padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '5px', minWidth: {xs: '80px', md: '200px'}, backgroundColor: 'rgb(194, 191, 8)', borderRadius: '10px',
+      }}
+       
       onDragOver={(e) => {e.preventDefault(); setDraggedTarget('inProgress')}} 
       onDragExit={() => {setDraggedTarget('')}} 
       onDrop = { () => { setDraggedTarget('inProgress'); handleFrom(); handleDrop()}}>
-      <h1 className="flex justify-center text-3xl font-bold  text-center">In Progress</h1>
+      <Typography 
+      sx = {{ textAlign: 'center', fontSize: { xs: '14px', md: '25px'}, color: 'white'}}  
+      >In Progress</Typography>
       {inProgress.map( (task, index) => (
-        <div  className="rounded-lg border bg-white text-black p-5" key={index} onDragStart={() => { setDraggedTask(task); setDraggedFrom('inProgress'); }} draggable >
-           <h1>
+        <Box  
+        sx = {{padding: '15px', borderRadius: '10px', backgroundColor: 'white', }} key={index} onDragStart={() => { setDraggedTask(task); setDraggedFrom('inProgress'); }} draggable >
+           <Typography sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>
               {task.taskName} - {task.projectName}
-            </h1>
-            <p>Priority: {task.priority}</p>
-          </div>
+            </Typography>
+            <Typography sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>Priority: {task.priority}</Typography>
+          </Box>
       ))}
       
-      </div>
-      <div className=" p-4 flex justify-between  gap-2 flex-col bg-sky-100 p-7 min-w-60 "
+      </Box>
+      <Box 
+      sx = {{
+        padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '5px', minWidth: {xs: '80px', md: '200px'}, backgroundColor: 'rgb(54, 156, 7)', borderRadius: '10px',
+      }}
       onDrop = {() => { setDraggedTarget('done'); handleFrom(); handleDrop()}}
       onDragOver={(e) => {e.preventDefault(); setDraggedTarget('done')}} 
       onDragExit={() => {setDraggedTarget('')}}
       >
-      <h1 className="flex justify-center text-3xl font-bold  text-center">Done</h1>
+      <Typography 
+      sx = {{ textAlign: 'center', fontSize: { xs: '14px', md: '25px'}, color: 'white'}}  
+      >Done</Typography>
       {done.map( (task, index) => (
-        <div className="rounded-lg border bg-white text-black p-5" key={index} onDragStart={() => { setDraggedTask(task); setDraggedFrom('done'); }} draggable
+        <Box  
+        sx = {{padding: '15px', borderRadius: '10px', backgroundColor: 'white', }} key={index} onDragStart={() => { setDraggedTask(task); setDraggedFrom('done'); }} draggable
          
         >
-          <h1>
+          <Typography  sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>
               {task.taskName} - {task.projectName}
-            </h1>
-            <p>Priority: {task.priority}</p>
-          </div>
+            </Typography>
+            <Typography sx = {{fontSize: { xs: '11px', md: '14px', wordWrap: 'break-word'}}}>Priority: {task.priority}</Typography>
+          </Box>
       ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

@@ -15,19 +15,23 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const KanbanContext = createContext<{
   addTask: boolean;
+
   setAddTask: React.Dispatch<React.SetStateAction<boolean>>;
+
   toDo: { taskName: string; projectName: string; priority: number; id: string }[];
   setToDo: React.Dispatch<
     React.SetStateAction<
       { taskName: string; projectName: string; priority: number; id: string }[]
     >
   >;
+
   inProgress: { taskName: string; projectName: string; priority: number; id: string }[];
   setInProgress: React.Dispatch<
     React.SetStateAction<
       { taskName: string; projectName: string; priority: number; id: string }[]
     >
   >;
+
   done: { taskName: string; projectName: string; priority: number; id: string }[];
   setDone: React.Dispatch<
     React.SetStateAction<
@@ -59,7 +63,6 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { taskName: string; projectName: string; priority: number; id: string }[]
   >([]);
 
-  // Fetch tasks from the API
   const fetchTasks = async () => {
     try {
       const response = await fetch("/api/tasks");
@@ -73,7 +76,6 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   };
 
-  // Update tasks via the API
   const updateTasks = React.useCallback(async () => {
     await fetch("/api/tasks", {
       method: "POST",
@@ -84,12 +86,10 @@ const Context: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     });
   }, [toDo, inProgress, done]);
 
-  // Fetch tasks on component mount
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // Update the database whenever the state changes
   useEffect(() => {
     if (toDo.length || inProgress.length || done.length) {
       updateTasks();
